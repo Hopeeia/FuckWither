@@ -7,6 +7,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FuckWither", "FuckWither\Fu
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FuckWither_BDX", "FuckWither_BDX\FuckWither_BDX.vcxproj", "{005A6D96-6DFB-40E8-A686-FA97AD3BED76}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FuckWither_LiteLoader", "FuckWither_LiteLoader\FuckWither_LiteLoader.vcxproj", "{82FC1AEF-568E-4604-8240-778FB6E4E5EE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -31,6 +33,14 @@ Global
 		{005A6D96-6DFB-40E8-A686-FA97AD3BED76}.Release|x64.Build.0 = Release|x64
 		{005A6D96-6DFB-40E8-A686-FA97AD3BED76}.Release|x86.ActiveCfg = Release|Win32
 		{005A6D96-6DFB-40E8-A686-FA97AD3BED76}.Release|x86.Build.0 = Release|Win32
+		{82FC1AEF-568E-4604-8240-778FB6E4E5EE}.Debug|x64.ActiveCfg = Debug|x64
+		{82FC1AEF-568E-4604-8240-778FB6E4E5EE}.Debug|x64.Build.0 = Debug|x64
+		{82FC1AEF-568E-4604-8240-778FB6E4E5EE}.Debug|x86.ActiveCfg = Debug|Win32
+		{82FC1AEF-568E-4604-8240-778FB6E4E5EE}.Debug|x86.Build.0 = Debug|Win32
+		{82FC1AEF-568E-4604-8240-778FB6E4E5EE}.Release|x64.ActiveCfg = Release|x64
+		{82FC1AEF-568E-4604-8240-778FB6E4E5EE}.Release|x64.Build.0 = Release|x64
+		{82FC1AEF-568E-4604-8240-778FB6E4E5EE}.Release|x86.ActiveCfg = Release|Win32
+		{82FC1AEF-568E-4604-8240-778FB6E4E5EE}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
