@@ -1,34 +1,7 @@
-extern "C" {
-	_declspec(dllimport) int HookFunction(void* oldfunc, void** poutold, void* newfunc);
-	_declspec(dllimport) void* dlsym_real(char const* name);
-}
-#include<string_view>
-using std::string_view;
-#define BKDR_MUL 131
-#define BKDR_ADD 0
-typedef unsigned long long CHash;
-constexpr CHash do_hash(string_view x) {
-	CHash rval = 0;
-	for (size_t i = 0; i < x.size(); ++i) {
-		rval *= BKDR_MUL;
-		rval += x[i];
-		rval += BKDR_ADD;
-	}
-	return rval;
-}
-constexpr CHash do_hash2(string_view x) {
-	//ap hash
-	CHash rval = 0;
-	for (size_t i = 0; i < x.size(); ++i) {
-		if (i & 1) {
-			rval ^= (~((rval << 11) ^ x[i] ^ (rval >> 5)));
-		}
-		else {
-			rval ^= (~((rval << 7) ^ x[i] ^ (rval >> 3)));
-		}
-	}
-	return rval;
-}
+﻿#pragma once
+#include "hash.h"
+#include "hook.h"
+
 template <typename T, int off>
 inline T& dAccess(void* ptr) {
 	return *(T*)(((uintptr_t)ptr) + off);
@@ -46,14 +19,13 @@ inline const T& dAccess(void const* ptr, uintptr_t off) {
 	return *(T*)(((uintptr_t)ptr) + off);
 }
 #define __WEAK __declspec(selectany)
-
-#if 0
+//#define GetServerSymbol(x) dlsym_real(x)
 template <CHash,CHash>
 __WEAK void* __ptr_cache;
 template <CHash hash, CHash hash2>
 inline static void* dlsym_cache(const char* fn) {
 	if (!__ptr_cache<hash, hash2>) {
-		__ptr_cache<hash, hash2> = dlsym_real(fn);
+		__ptr_cache<hash, hash2> = GetServerSymbol(fn);
 		if (!__ptr_cache<hash, hash2>) {
 			printf("Cant found sym %s\n", fn);
 			exit(1);
@@ -68,13 +40,10 @@ static inline auto __imp_Call(const char* fn) {
 	return ((ret(*)(p...))(dlsym_cache<hash, hash2>(fn)));
 }
 #define SymCall(fn, ret, ...) (__imp_Call<do_hash(fn), do_hash2(fn), ret, __VA_ARGS__>(fn))
-#define SYM(fn) (dlsym_cache<do_hash(fn), do_hash2(fn)>(fn))
-#endif
-#define SYM(x) dlsym_real(x)
-#define SymCall(fn, ret, ...) ((ret(*)(__VA_ARGS__))(SYM(fn)))
 #ifndef V8_ENV
 #define Call SymCall
 #endif // ! V8_ENV
+#define SYM(fn) (dlsym_cache<do_hash(fn), do_hash2(fn)>(fn))
 #define dlsym(xx) SYM(xx)
 class THookRegister {
 public:
@@ -85,7 +54,7 @@ public:
 		}
 	}
 	THookRegister(char const* sym, void* hook, void** org) {
-		auto found = dlsym_real(sym);
+		auto found = GetServerSymbol(sym);
 		if (found == nullptr) {
 			printf("FailedToHook: %p\n", sym);
 		}

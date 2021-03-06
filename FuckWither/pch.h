@@ -9,6 +9,9 @@
 
 // 添加要在此处预编译的标头
 #include <iostream>
-#include <bdxcore.h>
+#include <Loader.h>
+#include <fstream>
+#include <rapidjson/document.h>
+#include <filesystem>
 
 #endif //PCH_H

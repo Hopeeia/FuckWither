@@ -1,13 +1,12 @@
 #include "pch.h"
-#include <fstream>
-#include <rapidjson/document.h>
 
 bool enableWitherDestroy;
 bool enableSkullDestroy;
 
 void entry()
 {
-	std::string config_file = "config\\fuckwither.json";
+	std::filesystem::create_directory("plugins\\FuckWither");
+	std::string config_file = "plugins\\FuckWither\\fuckwither.json";
 	std::ifstream fs;
 	fs.open(config_file, std::ios::in);
 	enableWitherDestroy = false;
